@@ -1,0 +1,49 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <button type="button" id="bulk-delete-btn" style="background:#f7c6c6; color:#7f2424; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; box-shadow: 0 2px 6px rgba(159, 55, 55, 0.18);">
+            Delete Selected
+        </button>
+    </li>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteBtn = document.getElementById('bulk-delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    const checkboxes = document.querySelectorAll('.action-select');
+                    const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+                    if (selected.length === 0) {
+                        alert('Please select at least one item.');
+                        return;
+                    }
+                    if (confirm(`Delete ${selected.length} item(s)? This cannot be undone.`)) {
+                        // Build a POST form to the custom delete endpoint
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = 'bulk-delete/';
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = 'csrfmiddlewaretoken';
+                        csrfInput.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                        form.appendChild(csrfInput);
+                        selected.forEach(id => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = '_selected_action';
+                            input.value = id;
+                            form.appendChild(input);
+                        });
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
