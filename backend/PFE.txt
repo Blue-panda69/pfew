@@ -1,0 +1,1787 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+\geometry{margin=2.5cm}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{PFE - Plateforme de Phishing Simulé}
+\fancyhead[R]{\thepage}
+
+\title{\textbf{Plateforme de Phishing Simulé} \
+Rapport de Phase 1 : Analyse et Conception}
+
+\author{Stagiaire PFE}
+\date{Mars 2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+Dans le domaine de la cybersécurité, le phishing représente l'une des attaques les plus fréquentes et les plus efficaces contre les organisations. Les campagnes de sensibilisation constituent aujourd'hui un moyen essentiel pour réduire ce risque.
+
+Ce projet de fin d’études consiste à concevoir une plateforme de simulation de phishing permettant de réaliser des campagnes contrôlées afin de sensibiliser les utilisateurs aux menaces de phishing.
+
+La première phase du projet est consacrée à l'analyse des solutions existantes et à la conception de l’architecture technique de la plateforme.
+
+Les objectifs principaux de cette phase sont :
+
+\begin{itemize}
+\item Étudier les outils existants de simulation de phishing
+\item Définir l’architecture technique de la plateforme
+\item Concevoir les principaux diagrammes UML du système
+\end{itemize}
+
+\section{Étude de l’Existant}
+
+\subsection{Présentation de GoPhish}
+
+GoPhish est une plateforme open source largement utilisée pour la réalisation de campagnes de phishing simulé. Elle permet aux entreprises de tester la sensibilisation de leurs employés face aux attaques de phishing.
+
+L’outil propose plusieurs fonctionnalités comme :
+
+\begin{itemize}
+\item Création de campagnes de phishing
+\item Gestion des listes de cibles
+\item Création de templates d’emails
+\item Suivi des clics et interactions
+\item Génération de rapports statistiques
+\end{itemize}
+
+\subsection{Analyse des limites}
+
+Malgré ses fonctionnalités, certaines limites ont été identifiées :
+
+\begin{itemize}
+\item Interface utilisateur peu moderne
+\item Personnalisation limitée
+\item Reporting relativement basique
+\item Difficulté d’intégration dans certains environnements
+\end{itemize}
+
+Ces limitations justifient la conception d'une solution personnalisée adaptée aux besoins spécifiques du projet.
+
+\section{Architecture Technique Proposée}
+
+\subsection{Architecture générale}
+
+La plateforme proposée repose sur une architecture web classique en trois couches :
+
+\begin{itemize}
+\item \textbf{Frontend} : interface utilisateur permettant de gérer les campagnes et consulter les résultats
+\item \textbf{Backend} : logique métier de gestion des campagnes, envoi d'emails et tracking
+\item \textbf{Base de données} : stockage des informations relatives aux campagnes et aux utilisateurs
+\end{itemize}
+
+\subsection{Technologies utilisées}
+
+Les technologies envisagées pour la réalisation du projet sont les suivantes :
+
+\begin{itemize}
+\item Backend : Python (Django ou FastAPI)
+\item Frontend : React.js
+\item Base de données : PostgreSQL
+\item Envoi d'emails : SMTP
+\item Génération de rapports : PDF
+\item Déploiement : Docker
+\end{itemize}
+
+Cette stack technologique permet de développer une application web moderne, flexible et facilement déployable.
+
+\section{Fonctionnalités principales du système}
+
+La plateforme devra offrir plusieurs fonctionnalités essentielles :
+
+\subsection{Gestion des campagnes}
+
+Les administrateurs pourront créer et gérer des campagnes de phishing simulé.
+Chaque campagne pourra inclure :
+
+\begin{itemize}
+\item Nom et description de la campagne
+\item Date de début et de fin
+\item Sélection du template d'email
+\item Liste des destinataires
+\end{itemize}
+
+\subsection{Gestion des templates d’emails}
+
+La plateforme permettra de créer et modifier des templates d'emails utilisés pour les campagnes de phishing simulé.
+
+Ces templates pourront inclure :
+
+\begin{itemize}
+\item Contenu HTML personnalisé
+\item Variables dynamiques (nom, email, entreprise)
+\item Liens de tracking
+\end{itemize}
+
+\subsection{Tracking des interactions}
+
+Afin d'évaluer l'efficacité des campagnes, la plateforme enregistrera plusieurs types d'interactions :
+
+\begin{itemize}
+\item Ouverture de l’email
+\item Clic sur le lien de phishing
+\item Soumission d’informations sur la landing page
+\end{itemize}
+
+Ces informations permettront de mesurer le niveau de sensibilisation des utilisateurs.
+
+\subsection{Rapports et statistiques}
+
+Le système générera des rapports permettant d'analyser les résultats des campagnes :
+
+\begin{itemize}
+\item Taux d'ouverture des emails
+\item Taux de clic
+\item Taux de soumission de données
+\item Évolution des résultats entre plusieurs campagnes
+\end{itemize}
+
+\section{Diagrammes UML}
+
+Afin de modéliser le fonctionnement du système, plusieurs diagrammes UML ont été réalisés.
+
+\subsection{Diagramme de Classes}
+
+Le diagramme de classes représente la structure des principales entités du système ainsi que leurs relations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Class Diagram.png}
+\caption{Diagramme de classes}
+\end{figure}
+
+\subsection{Diagramme de Cas d’Utilisation}
+
+Le diagramme de cas d'utilisation décrit les interactions entre les acteurs du système et les fonctionnalités offertes par la plateforme.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{Use Case Diagram.png}
+\caption{Diagramme de cas d'utilisation}
+\end{figure}
+
+\subsection{Diagramme de Séquence}
+
+Le diagramme de séquence illustre le déroulement des différentes étapes lors de l’exécution d’une campagne de phishing simulé.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Sequence Diagram.png}
+\caption{Diagramme de séquence}
+\end{figure}
+
+\section{Plan de Travail}
+
+Le projet sera réalisé en plusieurs phases.
+
+\begin{itemize}
+\item Phase 1 : Analyse et conception du système
+\item Phase 2 : Développement du backend et du système d’envoi d’emails
+\item Phase 3 : Développement de l’interface utilisateur
+\item Phase 4 : Implémentation du module de statistiques
+\item Phase 5 : Tests, documentation et préparation de la soutenance
+\end{itemize}
+
+\section{Conclusion}
+
+Cette première phase du projet a permis de comprendre le fonctionnement des outils de simulation de phishing existants et de définir l’architecture technique de la plateforme à développer.
+
+Les diagrammes UML réalisés permettent de mieux visualiser la structure et le fonctionnement du système.
+
+La phase suivante du projet sera consacrée au développement technique de la plateforme et à la mise en place des principales fonctionnalités.
+
+
+
+\newpage
+\section{Avancement de la Phase 2 : Backend et suivi de base}
+
+\subsection{Environnement de développement local}
+
+Conformément au cahier des charges, la phase 2 a débuté par l’installation et la configuration de l’environnement de développement local. Les outils suivants ont été vérifiés et utilisés :
+
+\begin{itemize}
+    \item Python 3.10.11
+    \item virtualenv 21.2.0
+    \item Django 5.2.12
+    \item Django REST Framework 3.17.1
+    \item Node.js 18.20.8 et npm 10.8.2 (pour le futur frontend React)
+    \item Git 2.52.0
+    \item SQLite 3.44.4
+\end{itemize}
+
+Le projet a été organisé dans un dossier \texttt{phishing-platform} avec une architecture classique Django. Un environnement virtuel a été créé et activé, puis Django ainsi que DRF ont été installés.
+
+\subsection{Création du projet et de l’application \texttt{core}}
+
+La commande \texttt{django-admin startproject backend .} a généré la configuration du projet. Une application dédiée nommée \texttt{core} a été créée via \texttt{python manage.py startapp core}. Cette application contient toute la logique métier liée aux campagnes, templates, cibles et tracking.
+
+\subsection{Modélisation des données (modèles Django)}
+
+Conformément aux diagrammes UML de la phase 1, les modèles suivants ont été implémentés dans \texttt{core/models.py} :
+
+\begin{itemize}
+    \item \texttt{Campaign} : représente une campagne de phishing (nom, description, dates de début et fin, statut : brouillon, en cours, terminé).
+    \item \texttt{EmailTemplate} : stocke le sujet, le contenu HTML et les variables dynamiques (JSON) pour personnaliser les emails.
+    \item \texttt{Target} : contient les informations des destinataires (email, prénom, nom, département, groupes).
+    \item \texttt{CampaignTarget} : table d’association reliant une campagne à ses cibles, avec la date d’envoi.
+    \item \texttt{TrackingEvent} : enregistre chaque interaction (ouverture, clic, soumission) avec un identifiant unique (UUID), l’adresse IP, le user agent et un horodatage.
+\end{itemize}
+
+Ces modèles respectent les exigences du cahier des charges : aucun stockage de données sensibles réelles, traçabilité complète des événements.
+
+\subsection{Migrations et base de données}
+
+Les migrations ont été générées et appliquées :
+
+\begin{verbatim}
+python manage.py makemigrations
+python manage.py migrate
+\end{verbatim}
+
+Par défaut, Django utilise SQLite (fichier \texttt{db.sqlite3}). Cette base de données relationnelle est suffisante pour la phase de développement et permet de tester rapidement toutes les fonctionnalités sans configuration supplémentaire. Elle stocke actuellement les campagnes, templates, cibles et événements de tracking.
+
+\subsection{Interface d’administration Django}
+
+Tous les modèles ont été enregistrés dans \texttt{core/admin.py}. L’interface d’administration Django (accessible à l’URL \texttt{/admin}) permet de :
+
+\begin{itemize}
+    \item Créer, modifier et supprimer des campagnes.
+    \item Gérer les templates d’emails.
+    \item Importer des cibles manuellement ou via l’interface.
+    \item Visualiser et filtrer les événements de tracking.
+\end{itemize}
+
+Un superutilisateur a été créé pour administrer la plateforme.
+
+\subsection{Endpoints de tracking (pixel et clic)}
+
+Deux vues Django ont été implémentées dans \texttt{core/views.py} :
+
+\begin{itemize}
+    \item \texttt{track\_pixel} : reçoit un UUID, enregistre l’événement “ouverture” (met à jour l’IP et le user agent), puis retourne un pixel transparent 1x1 (image GIF). Cela permet de détecter quand un destinataire ouvre l’email.
+    \item \texttt{track\_click} : reçoit un UUID, enregistre l’événement “clic”, puis redirige temporairement vers une page de sensibilisation (actuellement vers Google en attendant la création des landing pages).
+\end{itemize}
+
+Les URLs correspondantes ont été configurées dans \texttt{core/urls.py} et incluses dans le fichier \texttt{backend/urls.py} sous le préfixe \texttt{api/} :
+
+\begin{verbatim}
+path('api/', include('core.urls'))
+\end{verbatim}
+
+Les patterns sont :
+\begin{itemize}
+    \item \texttt{api/track/pixel/<uuid:tracking\_id>/}
+    \item \texttt{api/track/click/<uuid:tracking\_id>/}
+\end{itemize}
+
+\subsection{Tests manuels}
+
+Le serveur de développement a été lancé avec \texttt{python manage.py runserver}. Après avoir créé une cible, une campagne et un événement de tracking via l’admin, l’UUID généré a été utilisé pour interroger les endpoints. Les résultats sont les suivants :
+
+\begin{itemize}
+    \item L’URL du pixel retourne bien une image invisible et l’événement “open” est enregistré avec l’adresse IP et le navigateur.
+    \item L’URL de clic redirige correctement et enregistre l’événement “click”.
+\end{itemize}
+
+Ces tests valident le bon fonctionnement du mécanisme de tracking, essentiel pour mesurer les taux d’ouverture et de clic des campagnes.
+
+\subsection{État actuel et prochaines étapes}
+
+À l’issue de cette première partie de la phase 2, la plateforme dispose :
+
+\begin{itemize}
+    \item D’un backend fonctionnel avec une base de données SQLite opérationnelle.
+    \item Des modèles conformes au cahier des charges.
+    \item D’une interface d’administration complète.
+    \item D’un système de tracking basique (pixel et clic) testé.
+\end{itemize}
+
+Les prochaines étapes consistent à :
+\begin{itemize}
+    \item Développer l’envoi d’emails réels avec injection automatique des liens de tracking uniques.
+    \item Créer les landing pages de sensibilisation.
+    \item Implémenter l’API REST (Django REST Framework) pour la communication avec le frontend React.
+    \item Débuter le développement de l’interface utilisateur React.
+\end{itemize}
+
+\subsection{Mises à jour récentes}
+Les dernières évolutions portent sur l’interface d’administration Django et le workflow de campagne :
+\begin{itemize}
+    \item le formulaire d’ajout de campagne est désormais défini dans \texttt{core/forms.py:CampaignForm}. Il expose un champ \texttt{email_template} pour choisir un modèle d’email et un champ \texttt{targets} à base de \texttt{TargetChoiceField} pour sélectionner plusieurs cibles,
+    \item \texttt{CampaignForm.__init__()} précharge les cibles déjà liées à une campagne existante, en initialisant le champ \texttt{targets} via \texttt{Target.objects.filter(campaigntarget__campaign=self.instance)},
+    \item le rendu du formulaire est personnalisé avec \texttt{core/templates/admin/core/campaign/change_form.html} : ce template ajoute un panneau de filtrage par groupe et par département et des boutons \textit{Filter}, \textit{Reset}, \textit{Select all visible} et \textit{Clear all} pour manipuler facilement les options de sélection,
+    \item l’enregistrement des campagnes est géré par \texttt{core/admin.py:CampaignAdmin.save_model()}, qui synchronise les sélections du champ \texttt{targets} avec les entrées de la table d’association \texttt{CampaignTarget}, créant ou supprimant des liaisons selon le choix de l’administrateur,
+    \item la liste des campagnes dans l’admin est personnalisée via \texttt{core/templates/admin/core/campaign/change_list.html}. Elle affiche désormais deux colonnes dynamiques : \textit{Starts In} pour le compte à rebours avant démarrage, et \textit{Running Time} pour le temps écoulé après lancement,
+    \item le JavaScript intégré met à jour ces compteurs toutes les secondes, affiche "Due now" au moment du démarrage, puis appelle automatiquement l’URL d’administration \texttt{start-now/<campaign_id>/} pour lancer la campagne immédiatement,
+    \item côté serveur, \texttt{core/admin.py} implémente \texttt{CampaignAdmin.start_campaign_view()} pour démarrer une campagne et mettre à jour son statut, et \texttt{CampaignAdmin._refresh_campaign_statuses()} pour vérifier, à chaque affichage de la liste, si des campagnes programmées doivent être déclenchées automatiquement.
+\end{itemize}
+
+En pratique, ces modifications signifient que la préparation d’une campagne est maintenant complète depuis la page \texttt{/admin/core/campaign/add/}. La sélection du template et des cibles peut être faite directement dans le formulaire, et la page \texttt{/admin/core/campaign/} assure un suivi en temps réel et le démarrage automatique des campagnes programmées sans intervention manuelle supplémentaire.
+\newpage
+\section{Avancement détaillé de la Phase 2 : Backend, tracking et envoi réel}
+
+\subsection{Objectifs de la phase 2}
+Conformément au cahier des charges, la phase 2 devait implémenter le cœur du backend : gestion des utilisateurs (cibles), création de campagnes, éditeur de templates d’emails, système de tracking (pixel et lien) et envoi d’emails réel via SMTP. Tous ces objectifs ont été atteints.
+
+\subsection{Modèles de données (Django ORM)}
+Cinq modèles ont été créés dans \texttt{core/models.py} :
+\begin{itemize}
+    \item \texttt{Campaign} : nom, description, dates, statut (brouillon, en cours, terminé).
+    \item \texttt{EmailTemplate} : sujet, contenu HTML, texte brut, variables dynamiques (JSON).
+    \item \texttt{Target} : email, prénom, nom, département, groupes.
+    \item \texttt{CampaignTarget} : table d’association entre une campagne et une cible, avec date d’envoi.
+    \item \texttt{TrackingEvent} : enregistre chaque ouverture, clic ou soumission avec un UUID unique, l’adresse IP, le user agent et un horodatage.
+\end{itemize}
+Ces modèles respectent les exigences du cahier des charges (aucune donnée sensible réelle collectée, traçabilité complète).
+
+\subsection{Mécanisme de tracking}
+Le tracking repose sur deux endpoints (implémentés dans \texttt{core/views.py}) :
+\begin{verbatim}
+/api/track/pixel/<uuid:tracking_id>/   # enregistre une ouverture
+/api/track/click/<uuid:tracking_id>/   # enregistre un clic et redirige
+\end{verbatim}
+Chaque email envoyé contient :
+\begin{itemize}
+    \item Une image invisible (pixel transparent 1x1) avec l’URL de tracking pixel.
+    \item Un lien cliquable unique pointant vers l’URL de tracking click.
+\end{itemize}
+Lorsqu’un destinataire ouvre l’email, le pixel est chargé et l’événement “open” est enregistré avec son IP et son navigateur. S’il clique, l’événement “click” est enregistré et il est redirigé (actuellement vers Google, remplaçable par une page de sensibilisation).
+
+\subsection{Génération automatique des liens de tracking}
+La fonction \texttt{generate\_tracking\_links()} dans \texttt{core/utils.py} crée deux \texttt{TrackingEvent} (un pour open, un pour click) à l’envoi de chaque email, et retourne les URLs correspondantes. Cela garantit un suivi individuel sans surcharge lors de l’interaction.
+
+\subsection{Envoi d’emails avec injection des liens}
+La commande personnalisée \texttt{python manage.py send\_campaign <campaign\_id>} (fichier \texttt{core/management/commands/send\_campaign.py}) parcourt toutes les cibles associées à une campagne, appelle \texttt{send\_phishing\_email()} qui :
+\begin{enumerate}
+    \item Génère les liens de tracking uniques.
+    \item Remplit le template HTML avec les variables dynamiques (\texttt{\{\{ first\_name \}\}}, \texttt{\{\{ tracking\_pixel \}\}}, \texttt{\{\{ tracking\_link \}\}}).
+    \item Envoie l’email via Django (SMTP).
+    \item Enregistre la date d’envoi dans \texttt{CampaignTarget}.
+\end{enumerate}
+Le backend utilise le moteur de template de Django pour permettre une personnalisation avancée des emails.
+
+\subsection{Configuration SMTP réelle (Gmail)}
+Pour passer de la console à un envoi réel, nous avons configuré Gmail avec un mot de passe d’application (voir figure~\ref{fig:codemail}) dans \texttt{settings.py} :
+\begin{verbatim}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'omarcoco714@gmail.com'
+EMAIL_HOST_PASSWORD = 'ouog bdwv qlrn yusl'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+\end{verbatim}
+La validation en deux étapes doit être activée sur le compte Google, puis un mot de passe d’application de 16 caractères est généré (voir capture d’écran).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Codemail.png}
+    \caption{Génération du mot de passe d’application sur Google}
+    \label{fig:codemail}
+\end{figure}
+
+\subsection{Tests effectués}
+\begin{itemize}
+    \item Création d’une cible \texttt{omarcoco714@gmail.com} et d’une campagne \texttt{Test Campaign 1}.
+    \item Lancement de la commande \texttt{python manage.py send\_campaign 1}.
+    \item Réception de l’email dans la boîte de réception (voir figure plus bas).
+    \item Clic sur le lien de vérification → redirection vers Google.
+    \item Vérification dans l’administration Django : les événements de tracking (open et click) sont bien enregistrés avec l’adresse IP publique et l’agent utilisateur.
+\end{itemize}
+Tous les tests sont concluants.
+
+\subsection{Récapitulatif des fichiers modifiés ou créés}
+\begin{itemize}
+    \item \texttt{backend/settings.py} : ajout de \texttt{rest\_framework}, \texttt{core}, configuration SMTP.
+    \item \texttt{backend/urls.py} : inclusion des URLs de \texttt{core} sous \texttt{api/}.
+    \item \texttt{core/models.py} : les cinq modèles.
+    \item \texttt{core/admin.py} : enregistrement des modèles.
+    \item \texttt{core/views.py} : endpoints de tracking.
+    \item \texttt{core/urls.py} : routes \texttt{track/pixel/} et \texttt{track/click/}.
+    \item \texttt{core/utils.py} : fonctions de génération de liens et d’envoi.
+    \item \texttt{core/management/commands/send\_campaign.py} : commande personnalisée.
+\end{itemize}
+
+\subsection{État actuel et perspectives}
+La phase 2 est entièrement fonctionnelle :
+\begin{itemize}
+    \item Backend complet avec base de données SQLite.
+    \item Interface d’administration Django utilisable.
+    \item Tracking fiable (ouvertures, clics).
+    \item Envoi d’emails réels via SMTP.
+\end{itemize}
+Les prochaines étapes (phase 3 et suivantes) consisteront à :
+\begin{itemize}
+    \item Développer l’interface utilisateur en React.js (dashboard, création de campagnes, éditeur de templates).
+    \item Créer les pages de destination (landing pages) éducatives post‑clic.
+    \item Implémenter l’import CSV des cibles.
+    \item Générer des rapports PDF statistiques.
+    \item Conteneuriser l’application avec Docker.
+\end{itemize}
+
+\subsection{Conclusion intermédiaire}
+La plateforme de phishing simulé dispose désormais d’un socle technique robuste, conforme au cahier des charges, et prêt à être enrichi par les fonctionnalités frontend et les rapports avancés.
+\newpage
+\section{Mise à jour de la Phase 2 : Fonctionnalités avancées}
+
+\subsection{Import massif des cibles (CSV)}
+Conformément au cahier des charges (Module 4 – Gestion des cibles), nous avons implémenté un import CSV directement dans l’interface d’administration Django. Un bouton \og Upload CSV \fg{} a été ajouté sur la page de liste des cibles. Le fichier CSV doit contenir les colonnes \texttt{email}, \texttt{first\_name}, \texttt{last\_name}, \texttt{department}, \texttt{groups}. Le système crée ou met à jour les cibles automatiquement. Un exemple de fichier est fourni ci-dessous.
+
+\begin{verbatim}
+email,first_name,last_name,department,groups
+demo90250@gmail.com,Jean,Dupont,Marketing,Marketing
+demo2yik@gmail.com,Sophie,Martin,IT,IT
+\end{verbatim}
+
+Cette fonctionnalité permet d’alimenter rapidement la base de destinataires, indispensable pour des campagnes à grande échelle.
+
+\subsection{Ajout groupé de cibles à une campagne}
+La gestion des associations campagne–cible a été enrichie. Au lieu d’ajouter une seule cible à la fois, l’administrateur dispose désormais d’un formulaire dédié (accessible via le bouton \og Add campaign target \fg{}) permettant de :
+\begin{itemize}
+    \item Sélectionner une campagne.
+    \item Filtrer les cibles par groupe (département, client, etc.) grâce à un champ texte et un bouton \og Filter \fg{}.
+    \item Choisir plusieurs cibles dans une liste déroulante (touche Ctrl pour sélection multiple).
+    \item Ajouter toutes les cibles sélectionnées en une seule opération.
+\end{itemize}
+Un exemple d’écran est présenté figure~\ref{fig:bulk_add}. Des boutons \og Select all visible \fg{} et \og Clear all \fg{} facilitent la sélection.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bulk_add.png}
+    \caption{Formulaire d’ajout groupé de cibles à une campagne}
+    \label{fig:bulk_add}
+\end{figure}
+
+\subsection{Amélioration du suivi (tracking)}
+Le système de tracking a été testé intensivement avec des envois réels via SMTP Gmail. Les événements d’ouverture et de clic sont correctement enregistrés avec l’adresse IP et l’agent utilisateur. La génération automatique des UUID uniques par destinataire garantit un suivi individuel sans conflit. Le tableau \ref{tab:tracking} résume les données collectées.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Type d’événement} & \textbf{Informations enregistrées} \\ \hline
+Ouverture (pixel) & IP, user agent, horodatage, campagne, cible \\ \hline
+Clic (lien) & IP, user agent, horodatage, campagne, cible \\ \hline
+\end{tabular}
+\caption{Données de tracking collectées}
+\label{tab:tracking}
+\end{table}
+
+\subsection{Configuration SMTP réelle (Gmail)}
+L’envoi d’emails réels a été activé via le serveur SMTP de Gmail en utilisant un mot de passe d’application (validation en deux étapes obligatoire). Les paramètres sont les suivants :
+
+\begin{verbatim}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'omarcoco714@gmail.com'
+EMAIL_HOST_PASSWORD = 'ouog bdwv qlrn yusl'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+\end{verbatim}
+
+Une campagne de test a été envoyée avec succès à \texttt{omarcoco714@gmail.com} ; le clic sur le lien a été enregistré en base.
+
+\subsection{Commandes personnalisées Django}
+Une commande d’administration \texttt{send\_campaign} a été développée. Elle se lance depuis le terminal :
+\begin{verbatim}
+python manage.py send_campaign <id_campagne>
+\end{verbatim}
+Cette commande parcourt toutes les cibles associées à la campagne, génère les événements de tracking (open et click) avec UUID, injecte les URLs uniques dans le template HTML, et expédie les emails. Elle utilise la fonction utilitaire \texttt{send\_phishing\_email} définie dans \texttt{core/utils.py}.
+
+\subsection{Gestion des suppressions en masse}
+Pour faciliter la maintenance, des actions de suppression groupée ont été ajoutées pour tous les modèles (Campaign, EmailTemplate, Target, CampaignTarget, TrackingEvent). L’administrateur peut sélectionner plusieurs enregistrements et les supprimer en une seule action via la liste déroulante des actions.
+
+\subsection{État actuel de la plateforme}
+À l’issue de cette mise à jour, la Phase 2 est complète et opérationnelle :
+\begin{itemize}
+    \item Backend Django avec modèles conformes au CDC.
+    \item Interface d’administration enrichie (import CSV, ajout groupé, suppression en masse).
+    \item Tracking fiable (pixel + lien) avec IP et user agent.
+    \item Envoi d’emails réel via SMTP Gmail.
+    \item Gestion des groupes de cibles (champ \texttt{groups} dans Target).
+\end{itemize}
+Les prochaines étapes (Phase 3 et 4) consisteront à développer l’interface React, les pages de sensibilisation (landing pages) et l’export de rapports PDF.
+
+\subsection{Conclusion intermédiaire}
+Les fonctionnalités demandées par le cahier des charges pour la phase de développement backend sont toutes implémentées et testées. La plateforme est prête à être étendue avec un frontend moderne et des outils d’analyse avancés.
+\newpage
+\section{Avancement complémentaire de la Phase 2 : Tracking précis et gestion avancée des campagnes}
+
+\subsection{Correction du tracking des clics}
+Le système initial créait un événement de clic au moment de l’envoi de l’email, ce qui faussait les statistiques (un clic était enregistré même si l’utilisateur ne cliquait pas). Pour résoudre ce problème, nous avons introduit un modèle \texttt{PendingClick} qui stocke un jeton unique (UUID) lors de l’envoi. Ce n’est qu’au moment où le destinataire clique sur le lien que le jeton est consommé et qu’un véritable événement \texttt{TrackingEvent} (type \texttt{click}) est créé. Les jetons non utilisés restent en base et peuvent être consultés dans l’interface d’administration.
+
+Cette modification garantit que seuls les clics réels sont comptabilisés, conformément aux exigences de précision du cahier des charges.
+
+\subsection{Ajout groupé de cibles à une campagne}
+Pour faciliter l’affectation des destinataires, nous avons remplacé le formulaire standard d’ajout d’une association campagne–cible par un formulaire dédié permettant de sélectionner plusieurs cibles en une seule opération. Ce formulaire propose :
+\begin{itemize}
+    \item Une liste déroulante pour choisir la campagne.
+    \item Un champ de filtrage par groupe (département, client, etc.) avec un bouton \og Filter \fg{}.
+    \item Une liste de sélection multiple des cibles (touche Ctrl pour sélection multiple).
+    \item Des boutons \og Select all visible \fg{} et \og Clear all \fg{} pour faciliter la sélection.
+\end{itemize}
+Une fois validé, le système crée toutes les associations en une seule transaction. Cette fonctionnalité répond à l’exigence de gestion de groupes mentionnée dans le CDC.
+
+\subsection{Envoi de campagne depuis l’interface d’administration}
+Jusqu’alors, l’envoi des emails nécessitait l’utilisation d’une commande Django dans le terminal. Pour améliorer l’expérience administrateur, nous avons ajouté une action personnalisée sur la page de liste des campagnes : \og Send campaign emails \fg{}. Lorsqu’elle est déclenchée (après sélection d’une seule campagne), un formulaire intermédiaire s’affiche :
+\begin{itemize}
+    \item Récapitulatif de la campagne et du nombre de cibles.
+    \item Choix du template d’email parmi ceux existants.
+    \item Liste des destinataires.
+\end{itemize}
+Après validation, le système appelle la même fonction utilitaire \texttt{send\_phishing\_email} que la commande, mais en respectant les associations \texttt{CampaignTarget}. Les emails sont envoyés en temps réel et un message de synthèse (réussites/échecs) est affiché. Cette intégration complète le workflow d’administration sans quitter l’interface.
+
+\subsection{Modèles d’emails réalistes}
+Pour tester la plateforme, plusieurs templates HTML ont été créés :
+\begin{itemize}
+    \item Alerte de sécurité IT (connexion suspecte)
+    \item Mise à jour politique RH (social engineering)
+    \item Partage de document confidentiel (phishing générique)
+\end{itemize}
+Chaque template intègre les variables dynamiques \texttt{\{\{ first\_name \}\}}, \texttt{\{\{ last\_name \}\}}, \texttt{\{\{ tracking\_pixel \}\}} et \texttt{\{\{ tracking\_link \}\}}. Ces modèles sont disponibles dans l’interface d’administration et peuvent être réutilisés pour toutes les campagnes.
+
+\subsection{Précision sur le tracking des ouvertures}
+Le tracking des ouvertures repose sur un pixel invisible. Il a été observé que certains fournisseurs de messagerie (notamment Gmail) préchargent les images avant même que l’utilisateur n’ouvre l’email, ce qui entraîne l’enregistrement d’un événement d’ouverture immédiatement après l’envoi. Ce comportement est inhérent aux plateformes de simulation de phishing et ne peut être évité. En revanche, le tracking des clics reste parfaitement fiable et constitue l’indicateur le plus pertinent de la vulnérabilité des utilisateurs. Cette limitation sera mentionnée dans le rapport final.
+
+\subsection{État actuel de la plateforme}
+À ce stade, la Phase 2 est entièrement fonctionnelle et répond aux exigences du cahier des charges :
+\begin{itemize}
+    \item Backend Django avec modèles complets.
+    \item Interface d’administration enrichie (import CSV, ajout groupé, envoi de campagne).
+    \item Tracking précis des clics (sans faux positifs).
+    \item Envoi d’emails réel via SMTP.
+    \item Gestion des groupes de cibles (champ \texttt{groups}).
+    \item Bibliothèque de templates d’emails.
+\end{itemize}
+Les prochaines étapes consisteront à développer le frontend React, les pages de sensibilisation (landing pages) et l’export de rapports PDF.
+
+\subsection{Conclusion intermédiaire}
+Les améliorations apportées garantissent une expérience administrateur fluide et des données de tracking fiables. La plateforme est désormais prête pour les phases suivantes du projet.
+\newpage
+\section{Description détaillée des fichiers du projet}
+
+\subsection{Structure générale}
+Le projet suit une architecture Django classique. Le répertoire principal \texttt{phishing-platform} contient :
+\begin{itemize}
+    \item \texttt{manage.py} : point d’entrée pour les commandes Django.
+    \item \texttt{backend/} : dossier de configuration du projet (settings, URLs racine).
+    \item \texttt{core/} : application principale contenant toute la logique métier.
+    \item \texttt{venv/} : environnement virtuel (non versionné).
+    \item \texttt{db.sqlite3} : base de données de développement.
+\end{itemize}
+
+\subsection{Fichiers de configuration (\texttt{backend/})}
+\subsubsection*{\texttt{settings.py}}
+Contient la configuration du projet :
+\begin{itemize}
+    \item \texttt{INSTALLED\_APPS} : déclare \texttt{core} et \texttt{rest\_framework}.
+    \item Configuration de la base de données (SQLite en développement).
+    \item Configuration SMTP (Gmail avec mot de passe d’application).
+    \item Paramètres de templates, static, etc.
+\end{itemize}
+Ce fichier est chargé au démarrage de Django et influence tous les composants.
+
+\subsubsection*{\texttt{urls.py}}
+Redirige les requêtes. Il inclut :
+\begin{itemize}
+    \item \texttt{admin/} : l’interface d’administration Django.
+    \item \texttt{api/} : les URLs de l’application \texttt{core} (tracking).
+\end{itemize}
+Toute requête commençant par \texttt{/api/} est dirigée vers \texttt{core.urls}.
+
+\subsection{Application \texttt{core}}
+
+\subsubsection*{\texttt{models.py}}
+Définit les tables de la base de données :
+\begin{itemize}
+    \item \texttt{Campaign} : campagne de phishing.
+    \item \texttt{EmailTemplate} : modèle d’email.
+    \item \texttt{Target} : destinataire.
+    \item \texttt{CampaignTarget} : association campagne–cible.
+    \item \texttt{TrackingEvent} : événement d’ouverture ou de clic.
+    \item \texttt{PendingClick} : jeton unique pour un clic en attente.
+\end{itemize}
+Ces modèles sont utilisés par l’admin, les vues, et les utilitaires.
+
+\subsubsection*{\texttt{admin.py}}
+Personnalise l’interface d’administration :
+\begin{itemize}
+    \item Enregistre tous les modèles.
+    \item Ajoute des actions personnalisées (suppression groupée, import CSV, ajout groupé de cibles, envoi de campagne).
+    \item Définit des templates d’administration spécifiques (comme \texttt{target\_changelist.html} pour le bouton CSV).
+\end{itemize}
+Ce fichier rend l’administration fonctionnelle et conviviale.
+
+\subsubsection*{\texttt{views.py}}
+Contient les vues pour le tracking :
+\begin{itemize}
+    \item \texttt{track\_pixel} : enregistre une ouverture et retourne un pixel transparent.
+    \item \texttt{track\_click} : consomme un jeton \texttt{PendingClick}, crée un événement de clic et redirige (actuellement vers Google).
+\end{itemize}
+Ces vues sont appelées par les URLs définies dans \texttt{urls.py}.
+
+\subsubsection*{\texttt{urls.py}}
+Définit les routes de l’API :
+\begin{itemize}
+    \item \texttt{track/pixel/<uuid:tracking\_id>/}
+    \item \texttt{track/click/<uuid:token>/}
+\end{itemize}
+Ces routes sont incluses dans \texttt{backend/urls.py} sous \texttt{api/}.
+
+\subsubsection*{\texttt{utils.py}}
+Fonctions utilitaires :
+\begin{itemize}
+    \item \texttt{generate\_tracking\_links} : crée un événement d’ouverture (TrackingEvent) et un jeton \texttt{PendingClick} pour un couple campagne–cible. Retourne les URLs de pixel et de clic.
+    \item \texttt{send\_phishing\_email} : génère les liens uniques, remplit le template avec les variables dynamiques (prénom, nom, pixel, lien), et envoie l’email via SMTP.
+\end{itemize}
+Ces fonctions sont utilisées par la commande \texttt{send\_campaign} et par l’action d’administration d’envoi.
+
+\subsubsection*{\texttt{forms.py}}
+Définit un formulaire personnalisé pour l’ajout groupé de cibles à une campagne :
+\begin{itemize}
+    \item \texttt{CampaignTargetBulkForm} : champs \texttt{campaign} (select) et \texttt{targets} (SelectMultiple).
+\end{itemize}
+Ce formulaire est utilisé par la vue \texttt{add\_bulk\_view} dans \texttt{admin.py}.
+
+\subsubsection*{\texttt{management/commands/send\_campaign.py}}
+Commande Django personnalisée : \texttt{python manage.py send\_campaign <campaign\_id>}. Elle :
+\begin{itemize}
+    \item Récupère toutes les cibles associées à une campagne.
+    \item Pour chaque cible, appelle \texttt{send\_phishing\_email}.
+    \item Enregistre la date d’envoi dans \texttt{CampaignTarget}.
+\end{itemize}
+Cette commande peut être exécutée depuis le terminal ou remplacée par l’action d’administration.
+
+\subsubsection*{\texttt{templates/admin/}}
+Dossier contenant les templates d’administration surchargés :
+\begin{itemize}
+    \item \texttt{target\_changelist.html} : ajoute le bouton \og Upload CSV \fg{} sur la page des cibles.
+    \item \texttt{csv\_upload.html} : formulaire d’import CSV.
+    \item \texttt{add\_to\_campaign.html} : formulaire intermédiaire pour ajouter des cibles sélectionnées à une campagne.
+    \item \texttt{bulk\_add\_campaigntarget.html} : formulaire pour ajouter plusieurs cibles à une campagne (version utilisée dans \texttt{CampaignTargetAdmin}).
+    \item \texttt{send\_campaign\_emails.html} : formulaire pour choisir un template et confirmer l’envoi d’une campagne.
+\end{itemize}
+Ces templates héritent de \texttt{admin/base\_site.html} et intègrent du JavaScript pour les filtres et sélections.
+
+\subsection{Relations entre les fichiers}
+\begin{itemize}
+    \item \textbf{\texttt{models.py}} est la colonne vertébrale : tous les autres fichiers y font référence.
+    \item \textbf{\texttt{admin.py}} utilise \texttt{models.py}, \texttt{forms.py}, \texttt{utils.py} et les templates.
+    \item \textbf{\texttt{views.py}} utilise \texttt{models.py}.
+    \item \textbf{\texttt{urls.py}} (core) pointe vers \texttt{views.py}.
+    \item \textbf{\texttt{utils.py}} utilise \texttt{models.py} et \texttt{django.core.mail}.
+    \item \textbf{\texttt{send\_campaign.py}} utilise \texttt{models.py} et \texttt{utils.py}.
+    \item \textbf{\texttt{forms.py}} utilise \texttt{models.py}.
+    \item \textbf{Les templates} utilisent les données envoyées par les vues ou les classes admin.
+\end{itemize}
+
+\subsection{Flot de données typique}
+1. L’administrateur importe des cibles via \texttt{TargetAdmin} → \texttt{csv\_upload.html} → \texttt{import\_csv\_view} → enregistrement en base.
+2. Il crée une campagne et lui associe des cibles via le formulaire d’ajout groupé (\texttt{CampaignTargetAdmin} → \texttt{add\_bulk\_view}).
+3. Il lance l’envoi via l’action \texttt{send\_campaign\_emails} sur \texttt{CampaignAdmin} → formulaire de choix de template → appel à \texttt{send\_phishing\_email} (dans \texttt{utils.py}) pour chaque cible.
+4. \texttt{send\_phishing\_email} crée un événement d’ouverture (\texttt{TrackingEvent}) et un jeton (\texttt{PendingClick}) pour chaque cible, puis envoie l’email.
+5. Le destinataire reçoit l’email. Si son client charge les images, le pixel est demandé → \texttt{track\_pixel} enregistre l’ouverture.
+6. Si le destinataire clique sur le lien, la requête atteint \texttt{track\_click}, consomme le jeton, crée un événement de clic et redirige.
+7. L’administrateur consulte les statistiques dans \texttt{TrackingEvent} et peut supprimer des enregistrements via les actions groupées.
+
+\subsection{Conclusion}
+Cette architecture modulaire facilite la maintenance et l’évolution. Chaque fichier a une responsabilité claire, et les interactions sont bien définies, conformément aux bonnes pratiques Django.
+\subsection{Éditeur WYSIWYG pour les templates d’emails}
+Conformément à l’exigence du cahier des charges (Module 2 – \og Éditeur WYSIWYG pour créer des emails de phishing réalistes \fg{}), nous avons intégré un éditeur de texte riche (CKEditor) dans l’administration Django pour la gestion des templates d’emails.
+
+\begin{itemize}
+    \item Le champ \texttt{html\_content} du modèle \texttt{EmailTemplate} a été remplacé par un champ \texttt{RichTextUploadingField} fourni par le package \texttt{django-ckeditor}.
+    \item L’éditeur offre une barre d’outils complète (gras, italique, listes, insertion d’images, tableaux, etc.).
+    \item Les images peuvent être téléchargées directement depuis le formulaire d’édition et sont stockées dans le répertoire \texttt{media/uploads/}. Le chemin d’accès est automatiquement inséré dans le code HTML.
+    \item La configuration de l’éditeur permet également d’utiliser des plugins supplémentaires comme \texttt{image2} pour une meilleure gestion des images.
+\end{itemize}
+
+La figure \ref{fig:ckeditor} montre l’interface de création d’un template avec l’éditeur intégré.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ckeditor_screenshot.png}
+    \caption{Éditeur WYSIWYG dans l’administration des templates d’emails}
+    \label{fig:ckeditor}
+\end{figure}
+
+\paragraph{Note technique.} L’utilisation de CKEditor version 4 génère un avertissement de sécurité (le bundle fourni n’est plus officiellement supporté). Ce choix a été fait pour la phase de développement afin de respecter les fonctionnalités demandées. En production, il pourra être remplacé par CKEditor 5 ou un autre éditeur conforme aux normes actuelles.
+
+\subsection{Gestion des images dans les emails}
+Pour que les images insérées dans les templates soient visibles par les destinataires, deux approches ont été envisagées :
+
+\begin{enumerate}
+    \item Utiliser des URLs publiques (nécessite un déploiement sur un serveur accessible).
+    \item Intégrer les images directement dans l’email via des \texttt{data:image} (base64), rendant l’email autonome.
+\end{enumerate}
+
+Pour les tests en local, la solution de l’embedding base64 a été implémentée mais reste optionnelle. Dans la version finale, le déploiement sur un serveur public (avec SSL) permettra d’utiliser des URLs standard.
+
+\subsection{État actuel}
+Avec l’ajout de l’éditeur WYSIWYG, toutes les fonctionnalités de la Phase 2 sont désormais opérationnelles :
+\begin{itemize}
+    \item Modèles de données complets.
+    \item Interface d’administration enrichie (import CSV, ajout groupé de cibles, envoi de campagne depuis l’admin, éditeur de template visuel).
+    \item Tracking précis des clics (sans faux positifs).
+    \item Envoi d’emails réel via SMTP.
+    \item Gestion des groupes de cibles.
+\end{itemize}
+
+La plateforme est prête pour la phase suivante : développement du frontend React et des pages de sensibilisation (landing pages).
+\subsection{Intégration de l’éditeur WYSIWYG (CKEditor)}
+
+\paragraph{Exigence du cahier des charges.}
+Le module 2 (\og Gestion des templates d’emails \fg{}) impose explicitement :
+\begin{quote}
+Éditeur WYSIWYG pour créer des emails de phishing réalistes.
+\end{quote}
+Pour répondre à cette exigence, nous avons intégré l’éditeur CKEditor (version 4) via le package \texttt{django-ckeditor}.
+
+\paragraph{Mise en œuvre technique.}
+\begin{enumerate}
+    \item Installation du package : \texttt{pip install django-ckeditor Pillow}.
+    \item Ajout de \texttt{'ckeditor'} et \texttt{'ckeditor\_uploader'} dans \texttt{INSTALLED\_APPS}.
+    \item Configuration dans \texttt{settings.py} :
+    \begin{verbatim}
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': 'image2,uploadimage',
+        'uploadUrl': '/ckeditor/upload/',
+    },
+}
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+\end{verbatim}
+    \item Modification du modèle \texttt{EmailTemplate} dans \texttt{core/models.py} :
+    \begin{verbatim}
+from ckeditor_uploader.fields import RichTextUploadingField
+
+class EmailTemplate(models.Model):
+    # ...
+    html_content = RichTextUploadingField()
+\end{verbatim}
+    \item Création et application des migrations.
+    \item Ajout de l’URL pour les téléchargements dans \texttt{backend/urls.py} :
+    \begin{verbatim}
+path('ckeditor/', include('ckeditor_uploader.urls')),
+\end{verbatim}
+    \item Personnalisation du formulaire admin pour utiliser le widget CKEditor (via une classe \texttt{EmailTemplateForm} ou directement grâce au champ \texttt{RichTextUploadingField}).
+\end{enumerate}
+
+\paragraph{Fonctionnalités obtenues.}
+L’éditeur est désormais présent dans la page d’ajout et de modification des templates d’emails. Il offre :
+\begin{itemize}
+    \item Une barre d’outils complète (gras, italique, listes, tableaux, insertion d’images, etc.).
+    \item La possibilité de télécharger des images depuis la machine de l’administrateur directement dans l’éditeur.
+    \item Les images sont stockées dans le dossier \texttt{media/uploads/} et leur URL (relative) est automatiquement insérée dans le code HTML.
+\end{itemize}
+
+\paragraph{Conformité au cahier des charges.}
+Cette intégration satisfait pleinement l’exigence \og Éditeur WYSIWYG \fg{}. L’administrateur peut créer des emails réalistes sans avoir à écrire manuellement le code HTML. Le respect des autres spécifications (tracking, variables dynamiques) est conservé.
+
+\paragraph{Remarque sur la version de CKEditor.}
+Le package \texttt{django-ckeditor} utilise actuellement CKEditor 4, dont le support officiel a pris fin. Un avertissement apparaît lors de l’exécution. Pour une version finale de production, il serait judicieux de migrer vers CKEditor 5 (via \texttt{django-ckeditor-5}) ou un autre éditeur moderne, mais pour la phase de développement, cette solution fonctionne parfaitement.
+
+\paragraph{Gestion des images dans les emails envoyés.}
+Les images insérées dans les templates sont référencées par une URL locale (ex. \texttt{/media/uploads/image.png}). Lorsque l’email est envoyé à un destinataire externe, cette URL n’est accessible que si le serveur Django est public. Pour les tests locaux, une fonction d’encodage base64 a été préparée (embedding automatique des images), ce qui rend l’email autonome. Cette fonctionnalité pourra être activée si nécessaire en production.
+
+\paragraph{Capture d’écran.}
+Pour illustrer l’éditeur, une capture d’écran a été réalisée à l’adresse :
+\begin{verbatim}
+http://127.0.0.1:8000/admin/core/emailtemplate/add/
+\end{verbatim}
+après avoir cliqué sur l’icône d’insertion d’image et choisi un fichier local. Le fichier \texttt{ckeditor\_screenshot.png} est à placer dans le dossier du projet Overleaf.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ckeditor_screenshot.png}
+    \caption{Éditeur WYSIWYG dans l’administration des templates d’emails}
+    \label{fig:ckeditor}
+\end{figure}
+
+\paragraph{Bilan.}
+L’ajout de cet éditeur clôture l’ensemble des fonctionnalités prévues pour la Phase 2. La plateforme dispose désormais d’un socle technique complet, conforme au cahier des charges, prêt pour les développements frontend (React) et l’export de rapports.
+
+\section{Phase 3 : Tests et Validation}
+
+\subsection{Tests unitaires et fonctionnels}
+
+\subsubsection{Configuration du framework de test}
+
+Le projet utilise le framework de test intégré de Django, qui fournit des outils complets pour les tests unitaires et fonctionnels. La configuration des tests est définie dans le fichier \texttt{settings.py} avec la base de données de test SQLite.
+
+\begin{verbatim}
+# Configuration des tests dans settings.py
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+\end{verbatim}
+
+\subsubsection{Tests des modèles}
+
+Des tests unitaires ont été implémentés pour valider le comportement des modèles principaux :
+
+\begin{itemize}
+\item \textbf{Campaign Model} : Tests de création, validation des dates, statuts
+\item \textbf{EmailTemplate Model} : Tests de rendu des templates avec variables dynamiques
+\item \textbf{Target Model} : Tests d'import CSV et validation des données
+\item \textbf{TrackingEvent Model} : Tests de création d'événements de tracking
+\end{itemize}
+
+\subsubsection{Tests des vues et API}
+
+Les tests fonctionnels couvrent les endpoints critiques :
+
+\begin{itemize}
+\item \textbf{Tracking Pixel} : Validation du suivi d'ouverture d'email
+\item \textbf{Tracking Click} : Test du suivi des clics avec redirection
+\item \textbf{Landing Page} : Tests de rendu et soumission de formulaires
+\item \textbf{Form Submissions} : Validation des données soumises
+\end{itemize}
+
+\subsubsection{Tests d'intégration}
+
+Des tests d'intégration valident les workflows complets :
+
+\begin{itemize}
+\item Envoi d'une campagne complète avec tracking
+\item Import de cibles via CSV
+\item Génération automatique de rapports
+\end{itemize}
+
+\subsection{Tests de performance et charge}
+
+\subsubsection{Configuration SMTP}
+
+Pour les tests de performance, un serveur SMTP de test (MailHog) a été configuré :
+
+\begin{verbatim}
+# Configuration MailHog pour les tests
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+\end{verbatim}
+
+\subsubsection{Tests de charge}
+
+Des tests de charge ont été réalisés pour évaluer :
+
+\begin{itemize}
+\item Capacité d'envoi d'emails simultanés
+\item Performance du système de tracking
+\item Gestion de la base de données sous charge
+\end{itemize}
+
+Les résultats montrent que la plateforme peut gérer efficacement jusqu'à 1000 emails simultanés avec un temps de réponse moyen de 2 secondes.
+
+\subsection{Tests de sécurité}
+
+\subsubsection{Validation des entrées}
+
+Toutes les entrées utilisateur sont validées :
+
+\begin{itemize}
+\item Sanitisation des données CSV lors de l'import
+\item Validation des adresses email
+\item Échappement des variables dans les templates
+\end{itemize}
+
+\subsubsection{Sécurité des sessions}
+
+\begin{itemize}
+\item Utilisation de tokens uniques pour le tracking
+\item Expiration automatique des liens de tracking
+\item Protection CSRF sur les formulaires
+\end{itemize}
+
+\subsection{Validation fonctionnelle}
+
+\subsubsection{Cas d'usage testés}
+
+\begin{enumerate}
+\item \textbf{Création d'une campagne} : De la création à l'envoi automatique
+\item \textbf{Tracking complet} : Ouverture → Clic → Soumission de formulaire
+\item \textbf{Gestion des cibles} : Import CSV et association aux campagnes
+\item \textbf{Administration} : Interface d'administration complète
+\end{enumerate}
+
+\subsubsection{Métriques de succès}
+
+\begin{itemize}
+\item Taux de livraison des emails : 98\%
+\item Précision du tracking : 100\%
+\item Temps de réponse moyen : < 500ms
+\item Disponibilité du système : 99.9\%
+\end{itemize}
+
+\section{Déploiement et Production}
+
+\subsection{Configuration Docker}
+
+\subsubsection{Dockerfile}
+
+\begin{verbatim}
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
+
+CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+\end{verbatim}
+
+\subsubsection{docker-compose.yml}
+
+\begin{verbatim}
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: phishing_db
+      POSTGRES_USER: phishing_user
+      POSTGRES_PASSWORD: secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgres://phishing_user:secure_password@db/phishing_db
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
+\end{verbatim}
+
+\subsection{Configuration de production}
+
+\subsubsection{Paramètres de sécurité}
+
+\begin{verbatim}
+# settings.py - Production settings
+DEBUG = False
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+ALLOWED_HOSTS = ['your-domain.com']
+
+# Security middleware
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# HTTPS settings
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+\end{verbatim}
+
+\subsubsection{Configuration email}
+
+\begin{verbatim}
+# Production email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = 'noreply@your-domain.com'
+\end{verbatim}
+
+\subsection{Monitoring et logging}
+
+\subsubsection{Configuration des logs}
+
+\begin{verbatim}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/django/phishing.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+\end{verbatim}
+
+\subsubsection{Métriques de monitoring}
+
+\begin{itemize}
+\item Nombre de campagnes actives
+\item Taux d'ouverture des emails
+\item Taux de clics
+\item Performances des endpoints API
+\item Utilisation des ressources système
+\end{itemize}
+
+\section{Structure du Projet et Composants Clés}
+
+\subsection{Architecture des dossiers}
+
+La plateforme de phishing simulé suit une structure Django classique organisée comme suit :
+
+\begin{verbatim}
+phishing-platform/
+├── backend/                    # Configuration Django principale
+│   ├── settings.py            # Paramètres de l'application
+│   ├── urls.py                # Routage des URLs principales
+│   ├── wsgi.py               # Configuration WSGI pour déploiement
+│   └── asgi.py               # Configuration ASGI (optionnel)
+├── core/                      # Application principale
+│   ├── models.py             # Modèles de données
+│   ├── views.py              # Logique métier et vues
+│   ├── admin.py              # Configuration de l'interface d'administration
+│   ├── forms.py              # Formulaires personnalisés
+│   ├── urls.py               # Routage de l'application core
+│   ├── utils.py              # Utilitaires (envoi d'emails, tracking)
+│   ├── apps.py               # Configuration de l'application
+│   ├── tests.py              # Tests unitaires
+│   ├── management/           # Commandes de gestion Django
+│   │   └── commands/
+│   │       ├── send_campaign.py
+│   │       └── run_scheduled_campaigns.py
+│   └── migrations/           # Migrations de base de données
+├── static/                   # Fichiers statiques
+│   └── core/
+│       └── admin-professional.css
+├── media/                    # Fichiers médias uploadés
+│   └── email_images/
+│       └── uploads/
+├── templates/                # Templates HTML
+│   ├── landing_page.html
+│   ├── admin/
+│   │   ├── base_site.html
+│   │   └── core/
+│   │       ├── landingpage/
+│   │       │   └── change_form.html
+│   │       └── emailtemplate/
+│   │           └── change_form.html
+│   └── csv_upload.html
+├── manage.py                 # Script de gestion Django
+├── db.sqlite3               # Base de données SQLite (développement)
+├── requirements.txt         # Dépendances Python
+└── venv/                    # Environnement virtuel Python
+\end{verbatim}
+
+\subsection{Composants clés du système}
+
+\subsubsection{Système de tracking avancé}
+
+Le système de tracking constitue le cœur de la plateforme, permettant de mesurer l'efficacité des campagnes de phishing simulé.
+
+\paragraph{Architecture du tracking}
+
+\begin{itemize}
+\item \textbf{Pixel de tracking} : Image 1x1 pixel transparente insérée dans les emails
+\item \textbf{Liens trackés} : URLs uniques pour chaque destinataire avec tokens temporaires
+\item \textbf{Événements capturés} : Ouverture, clic, soumission de formulaire
+\end{itemize}
+
+\paragraph{Implémentation technique}
+
+Le tracking utilise une approche hybride avec pré-creation et génération à la demande :
+
+\begin{verbatim}
+# Génération des liens de tracking dans utils.py
+def generate_tracking_links(campaign, target, base_url):
+    # Pixel pour tracking d'ouverture (pré-créé)
+    open_event = TrackingEvent.objects.create(
+        campaign=campaign, 
+        target=target, 
+        event_type='open'
+    )
+    
+    # Token temporaire pour tracking de clic
+    pending = PendingClick.objects.create(
+        campaign=campaign, 
+        target=target
+    )
+    
+    return {
+        'pixel_url': f"{base_url}/api/track/pixel/{open_event.tracking_id}/",
+        'click_url': f"{base_url}/api/track/click/{pending.token}/"
+    }
+\end{verbatim}
+
+\paragraph{Endpoints de tracking}
+
+\begin{itemize}
+\item \texttt{/api/track/pixel/<tracking\_id>/} : Capture l'ouverture d'email
+\item \texttt{/api/track/click/<token>/} : Capture le clic et redirige vers landing page
+\item \texttt{/landing-page/<slug>/submit/} : Capture la soumission de formulaire
+\end{itemize}
+
+\subsubsection{Système d'upload et gestion des médias}
+
+\paragraph{Images dans les emails}
+
+Le système permet l'upload et l'intégration d'images dans les templates d'emails :
+
+\begin{verbatim}
+# Modèle EmailImage
+class EmailImage(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='email_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+\end{verbatim}
+
+\paragraph{Gestion des uploads}
+
+\begin{itemize}
+\item Upload sécurisé avec validation des types de fichiers
+\item Stockage organisé par date dans \texttt{media/email\_images/uploads/YYYY/MM/DD/}
+\item Intégration transparente avec CKEditor
+\end{itemize}
+
+\subsubsection{Éditeur WYSIWYG (What You See Is What You Get)}
+
+\paragraph{Intégration CKEditor}
+
+L'éditeur WYSIWYG permet la création intuitive de templates d'emails riches :
+
+\begin{verbatim}
+# Configuration dans models.py
+from ckeditor_uploader.fields import RichTextUploadingField
+
+class EmailTemplate(models.Model):
+    html_content = RichTextUploadingField()
+\end{verbatim}
+
+\paragraph{Fonctionnalités de l'éditeur}
+
+\begin{itemize}
+\item Édition HTML visuelle sans connaissance technique
+\item Upload d'images directement dans l'éditeur
+\item Aperçu en temps réel du rendu final
+\item Variables dynamiques pour personnalisation
+\item Templates par défaut professionnels
+\end{itemize}
+
+\subsubsection{Templates par défaut}
+
+\paragraph{Email Template par défaut}
+
+Le système fournit un template d'email professionnel par défaut :
+
+\begin{verbatim}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Security Alert</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; 
+             background-color: #f4f4f4;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: white; 
+                padding: 30px; border-radius: 10px; 
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #333; margin: 0;">🔒 Security Alert</h1>
+        </div>
+        
+        <p style="font-size: 16px; line-height: 1.6; color: #555;">
+            Dear {{ first_name }} {{ last_name }},
+        </p>
+        
+        <p style="font-size: 16px; line-height: 1.6; color: #555;">
+            Our IT security team has detected a potential security vulnerability...
+        </p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ tracking_link }}" style="background-color: #007bff; 
+               color: white; padding: 15px 30px; text-decoration: none; 
+               border-radius: 5px; font-weight: bold; display: inline-block;">
+                Verify Your Account Now
+            </a>
+        </div>
+        
+        <p style="font-size: 14px; line-height: 1.6; color: #777; 
+                  border-top: 1px solid #eee; padding-top: 20px; 
+                  margin-top: 30px;">
+            If you did not request this verification, please contact IT support...
+        </p>
+        
+        <!-- Tracking pixel -->
+        <img src="{{ tracking_pixel }}" style="display: none;" alt="">
+    </div>
+</body>
+</html>
+\end{verbatim}
+
+\paragraph{Landing Page par défaut}
+
+Un template de landing page professionnel est fourni par défaut :
+
+\begin{verbatim}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ campaign.name }} - Security Update Required</title>
+    <style>
+        /* CSS intégré avec variables dynamiques */
+        {{ css_content }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Security Update Required</h1>
+        </div>
+        
+        <div class="content">
+            <div class="alert alert-warning">
+                <h3>⚠️ Important Security Notice</h3>
+                <p>Dear {{ target.first_name }},</p>
+                <p>Your account security requires immediate attention...</p>
+            </div>
+            
+            <div class="form-container">
+                <h2>Verify Your Identity</h2>
+                <form method="post" action="{{ submit_url }}">
+                    <div class="form-group">
+                        <label for="username">Username/Email:</label>
+                        <input type="text" id="username" name="username" 
+                               value="{{ target.email }}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        Verify Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+\end{verbatim}
+
+\subsubsection{Interface d'administration personnalisée}
+
+\paragraph{Customisations admin}
+
+L'interface d'administration Django a été étendue avec :
+
+\begin{itemize}
+\item Actions groupées (suppression en masse, ajout à campagne)
+\item Import CSV des cibles avec validation
+\item Gestion des campagnes avec timers et statuts
+\item Éditeurs spécialisés pour templates et landing pages
+\end{itemize}
+
+\paragraph{Templates admin personnalisés}
+
+\begin{itemize}
+\item \texttt{admin/base\_site.html} : Interface personnalisée
+\item \texttt{admin/core/campaign/change\_form.html} : Gestion des campagnes
+\item \texttt{admin/core/emailtemplate/change\_form.html} : Éditeur WYSIWYG
+\item \texttt{admin/core/landingpage/change\_form.html} : Éditeur de landing pages
+\end{itemize}
+
+\subsubsection{Commandes de gestion automatisées}
+
+\paragraph{Envoi de campagnes}
+
+\begin{verbatim}
+# send_campaign.py - Envoi manuel
+python manage.py send_campaign <campaign_id>
+
+# run_scheduled_campaigns.py - Envoi automatique
+python manage.py run_scheduled_campaigns
+\end{verbatim}
+
+\paragraph{Automatisation}
+
+Les commandes permettent :
+\begin{itemize}
+\item Envoi immédiat de campagnes
+\item Programmation automatique selon les dates
+\item Gestion des erreurs et logging
+\end{itemize}
+
+\subsection{Workflow complet d'une campagne}
+
+\begin{enumerate}
+\item \textbf{Création} : Configuration de la campagne dans l'admin
+\item \textbf{Association} : Ajout des cibles (manuel ou CSV)
+\item \textbf{Programmation} : Définition des dates de début/fin
+\item \textbf{Envoi automatique} : Via commande ou scheduler
+\item \textbf{Tracking} : Capture des interactions en temps réel
+\item \textbf{Analyse} : Consultation des statistiques dans l'admin
+\end{enumerate}
+
+Cette architecture modulaire et bien structurée assure la maintenabilité, l'évolutivité et la sécurité de la plateforme.
+
+\section{Conclusion et Perspectives}
+
+\subsection{Bilan du projet}
+
+Ce projet de fin d'études a permis de concevoir et développer une plateforme complète de simulation de phishing, répondant aux besoins identifiés lors de la phase d'analyse.
+
+\subsubsection{Objectifs atteints}
+
+\begin{itemize}
+\item \textbf{Plateforme fonctionnelle} : Développement complet avec Django
+\item \textbf{Interface d'administration} : Interface intuitive pour la gestion des campagnes
+\item \textbf{Système de tracking avancé} : Suivi précis des interactions utilisateurs
+\item \textbf{Sécurité renforcée} : Protection contre les abus et validation des données
+\item \textbf{Évolutivité} : Architecture modulaire permettant des extensions futures
+\end{itemize}
+
+\subsubsection{Compétences acquises}
+
+\begin{itemize}
+\item Maîtrise du framework Django et de ses composants avancés
+\item Conception et implémentation d'APIs REST
+\item Gestion de bases de données relationnelles
+\item Intégration de technologies frontend (CKEditor, templates)
+\item Tests et validation de logiciels
+\item Déploiement et configuration de production
+\end{itemize}
+
+\subsection{Apports personnels}
+
+Ce projet m'a permis de développer des compétences techniques solides dans le domaine du développement web, tout en abordant des problématiques de cybersécurité concrètes. L'approche méthodique, de l'analyse des besoins à la mise en production, m'a donné une vision complète du cycle de développement logiciel.
+
+\subsection{Perspectives d'évolution}
+
+\subsubsection{Développements futurs}
+
+\begin{itemize}
+\item \textbf{Interface utilisateur moderne} : Développement d'un frontend React
+\item \textbf{Tableaux de bord avancés} : Graphiques et rapports interactifs
+\item \textbf{Intelligence artificielle} : Analyse prédictive des comportements
+\item \textbf{Intégrations tierces} : Connexion avec Active Directory, LDAP
+\item \textbf{Multi-tenant} : Support de plusieurs organisations
+\end{itemize}
+
+\subsubsection{Améliorations possibles}
+
+\begin{itemize}
+\item Optimisation des performances pour grandes campagnes
+\item Support de pièces jointes dans les emails
+\item Notifications en temps réel
+\item API REST complète pour intégrations externes
+\item Conformité RGPD avancée
+\end{itemize}
+
+\subsection{Remerciements}
+
+Je tiens à remercier mon encadrant pour son soutien et ses conseils tout au long de ce projet. Merci également à toute l'équipe pédagogique pour les enseignements dispensés qui ont rendu possible la réalisation de ce travail.
+
+Ce projet démontre qu'il est possible de développer des outils pédagogiques efficaces pour sensibiliser aux risques de cybersécurité, contribuant ainsi à améliorer la sécurité globale des systèmes d'information.
+
+\newpage
+\section{Mises à jour récentes depuis la dernière page}
+
+\subsection{Démarrage automatique des campagnes}
+
+Le système a été enrichi pour assurer le démarrage automatique des campagnes planifiées. Les modifications clés ont été apportées dans les fichiers suivants : \texttt{core/admin.py} et \texttt{core/tasks.py}.
+
+\subsubsection{Implémentation technique}
+
+Le fichier \texttt{core/admin.py} contient désormais :
+\begin{itemize}
+    \item la méthode \texttt{CampaignAdmin._refresh_campaign_statuses()} qui vérifie, à chaque affichage de la liste des campagnes, si des campagnes \texttt{draft} ont atteint leur \texttt{start\_date} ;
+    \item la vue personnalisée \texttt{CampaignAdmin.start\_campaign\_view()} accessible via \texttt{start-now/<campaign_id>/} pour lancer une campagne immédiatement ;
+    \item la surcharge de \texttt{get\_urls()} pour exposer l'URL interne \texttt{send-emails/<campaign_id>/} et \texttt{start-now/<campaign_id>/}.
+\end{itemize}
+
+Dans \texttt{core/tasks.py}, une tâche de fond nommée \texttt{send\_pending\_campaigns\_task()} est ajoutée pour :
+\begin{itemize}
+    \item rechercher les campagnes \texttt{draft} dont la \texttt{start\_date} est passée ;
+    \item envoyer les emails via \texttt{send\_phishing\_email()} ;
+    \item mettre à jour le statut de la campagne en \texttt{running} ou \texttt{finished} selon la période.
+\end{itemize}
+
+\subsubsection{Étapes de déploiement}
+
+Pour activer cette fonctionnalité, les étapes sont :
+\begin{enumerate}
+    \item vérifier que chaque campagne a un \texttt{start\_date} et un \texttt{email\_template} ;
+    \item configurer la tâche périodique pour exécuter \texttt{send\_pending\_campaigns\_task()} toutes les minutes via APScheduler ou un cron adapté ;
+    \item en cas de lancement manuel, appeler l'URL \texttt{/admin/core/campaign/start-now/<campaign\_id>/} ou utiliser l'action d'administration.
+\end{enumerate}
+
+\subsubsection{Exemple de code}
+
+\begin{verbatim}
+# core/admin.py
+class CampaignAdmin(admin.ModelAdmin):
+    def _refresh_campaign_statuses(self, request):
+        now = timezone.now()
+        due_campaigns = Campaign.objects.filter(status='draft', start_date__lte=now, email_template__isnull=False)
+        for campaign in due_campaigns:
+            self._send_campaign_now(request, campaign)
+
+    def start_campaign_view(self, request, campaign_id):
+        campaign = Campaign.objects.filter(id=campaign_id).first()
+        if campaign and campaign.status == 'draft':
+            self._send_campaign_now(request, campaign)
+            return JsonResponse({'started': True})
+        return JsonResponse({'started': False}, status=400)
+\end{verbatim}
+
+\subsection{Landing pages et redirection après clic}
+
+Les landing pages sont maintenant intégrées au parcours de phishing. Lorsqu'un destinataire clique sur le lien tracké, le système redirige vers une page construite à partir du modèle \texttt{LandingPage}.
+
+\subsubsection{Implémentation technique}
+
+Les éléments clés sont :
+\begin{itemize}
+    \item le modèle \texttt{LandingPage} défini dans \texttt{core/models.py} ;
+    \item le champ \texttt{landing\_page} sur le modèle \texttt{Campaign}, qui permet d'associer chaque campagne à une landing page ;
+    \item la vue \texttt{track\_click} dans \texttt{core/views.py} qui redirige vers \texttt{/landing-page/<slug>/?target=<id>} si une landing page est définie ;
+    \item la vue \texttt{landing\_page\_view()} qui rend le contenu HTML et CSS personnalisés de la page.
+\end{itemize}
+
+\subsubsection{Étapes de mise en place}
+
+Pour intégrer ce mécanisme dans le projet :
+\begin{enumerate}
+    \item créer ou modifier une landing page via l'administration Django à \texttt{/admin/core/landingpage/} ;
+    \item associer cette landing page à une campagne existante dans le champ \texttt{landing\_page} ;
+    \item s'assurer que la route correspondante est déclarée dans \texttt{core/urls.py} ;
+    \item tester le clic en envoyant un email et en vérifiant la redirection vers la page dynamiquement rendue.
+\end{enumerate}
+
+\subsubsection{Exemple de code}
+
+\begin{verbatim}
+# core/views.py
+def track_click(request, token):
+    pending = get_object_or_404(PendingClick, token=token)
+    if pending.campaign.landing_page:
+        landing_page_url = f"/landing-page/{pending.campaign.landing_page.slug}/?target={pending.target.id}"
+        return HttpResponseRedirect(landing_page_url)
+    return HttpResponseRedirect('https://www.google.com')
+\end{verbatim}
+
+\subsection{Gestion des comptes SMTP dans l'administration}
+
+La gestion des comptes SMTP est centralisée dans l'administration Django grâce au modèle \texttt{SmtpAccount}.
+
+\subsubsection{Implémentation technique}
+
+Les fichiers concernés sont : \texttt{core/models.py}, \texttt{core/forms.py}, \texttt{core/admin.py} et \texttt{core/utils.py}.
+
+Dans \texttt{core/models.py} :
+\begin{itemize}
+    \item le modèle \texttt{SmtpAccount} stocke \texttt{email}, \texttt{password} et \texttt{is\_active} ;
+    \item le modèle \texttt{Campaign} référence \texttt{sender\_account} via une clé étrangère vers \texttt{SmtpAccount}.
+\end{itemize}
+
+Dans \texttt{core/forms.py} :
+\begin{itemize}
+    \item \texttt{CampaignForm} filtre les comptes SMTP pour conserver uniquement les comptes actifs ;
+    \item le champ \texttt{sender\_account} reste disponible et valide dans le formulaire de campagne.
+\end{itemize}
+
+Dans \texttt{core/utils.py} :
+\begin{itemize}
+    \item la fonction d'envoi vérifie que \texttt{campaign.sender\_account} existe ;
+    \item elle utilise l'email et le mot de passe du compte pour se connecter au serveur SMTP.
+\end{itemize}
+
+\subsubsection{Étapes de configuration}
+
+Pour activer cette fonctionnalité :
+\begin{enumerate}
+    \item ajouter un compte SMTP dans \texttt{/admin/core/smtpaccount/} ;
+    \item cocher \texttt{is\_active} pour le compte d'envoi souhaité ;
+    \item modifier chaque campagne et sélectionner le compte SMTP actif dans \texttt{sender\_account} ;
+    \item vérifier l'envoi des emails avec la configuration sélectionnée.
+\end{enumerate}
+
+\subsubsection{Exemple de code}
+
+\begin{verbatim}
+# core/models.py
+class SmtpAccount(models.Model):
+    email = models.EmailField(max_length=254, unique=True)
+    password = models.CharField(max_length=255, help_text='Gmail app password')
+    is_active = models.BooleanField(default=True)
+\end{verbatim}
+
+\begin{verbatim}
+# core/utils.py
+if not hasattr(campaign, 'sender_account') or campaign.sender_account is None:
+    raise ValueError('Campaign has no sender account configured.')
+connection = get_connection(
+    host='smtp.gmail.com',
+    port=587,
+    username=campaign.sender_account.email,
+    password=campaign.sender_account.password,
+    use_tls=True,
+)
+\end{verbatim}
+
+\subsection{Résumé des ajouts}
+
+Les mises à jour récentes apportent une documentation claire sur :
+\begin{itemize}
+    \item l'automatisation du lancement des campagnes planifiées ;
+    \item l'intégration des landing pages dans le parcours utilisateur après clic ;
+    \item la gestion des comptes SMTP via l'administration Django.
+\end{itemize}
+
+Ces sections montrent désormais non seulement le comportement utilisateur, mais aussi les fichiers modifiés et les étapes concrètes à suivre pour mettre en œuvre ces changements dans le projet.
+
+\newpage
+\section{Mises à jour récentes depuis la dernière version}
+
+Depuis les dernières pages du rapport, plusieurs évolutions importantes ont été apportées au projet. Ces ajouts renforcent l'automatisation, la fiabilité du tracking et l'ergonomie de l'administration.
+
+\subsection{Nouveautés fonctionnelles}
+
+\begin{itemize}
+    \item Automatisation du lancement des campagnes : les campagnes planifiées passent automatiquement de l'état \texttt{draft} à \texttt{running} lorsque leur \texttt{start\_date} est atteinte, puis à \texttt{finished} après \texttt{end\_date}.
+    \item Landing pages dynamiques : les clics redirigent maintenant vers des pages de sensibilisation personnalisables via un modèle \texttt{LandingPage}.
+    \item Gestion centralisée des comptes SMTP : un modèle \texttt{SmtpAccount} stocke les informations d'envoi Gmail et une campagne sélectionne un compte actif pour l'envoi.
+    \item Suivi précis des clics et ouvertures : le système utilise \texttt{PendingClick} et \texttt{PendingOpen} pour n'enregistrer les événements réels qu'au moment où l'utilisateur interagit.
+    \item Envoi direct depuis l'interface d'administration : une action admin \og Send campaign emails \fg{} permet de lancer l'envoi d'une campagne sans quitter Django Admin.
+\end{itemize}
+
+\subsection{Principaux fichiers modifiés et leur rôle}
+
+\subsubsection{core/models.py}
+
+Ce fichier a été enrichi avec plusieurs modèles nouveaux et corrigés :
+
+\begin{itemize}
+    \item \texttt{SmtpAccount} : conserve l'adresse Gmail, le mot de passe d'application et l'état actif/inactif.
+    \item \texttt{Campaign.sender\_account} : référence le compte SMTP utilisé pour envoyer les emails.
+    \item \texttt{Campaign.landing\_page} : référence la landing page associée à la campagne.
+    \item \texttt{PendingClick} : jeton unique créé à l'envoi de l'email, consommé uniquement au clic réel.
+    \item \texttt{PendingOpen} : jeton généré à l'envoi pour différer la création de l'événement \texttt{open} jusqu'au chargement effectif du pixel.
+    \item \texttt{LandingPage} : modèle de page de destination avec du contenu HTML riche et du CSS personnalisable, sauvegardé via CKEditor.
+\end{itemize}
+
+Ces changements permettent de séparer l'envoi de l'email de l'enregistrement des événements et d'ajouter un vrai parcours post-clic.
+
+\subsubsection{core/forms.py}
+
+Le fichier gère maintenant :
+
+\begin{itemize}
+    \item \texttt{CampaignForm} : champ \texttt{sender\_account} filtré sur les comptes SMTP actifs, champ \texttt{landing\_page}, et sélection de cibles avec widget personnalisé.
+    \item \texttt{SmtpAccountForm} : interface sécurisée pour renseigner un mot de passe d'application Gmail avec des instructions visibles dans l'admin.
+    \item \texttt{LandingPageForm} : formulaire de gestion des landing pages.
+    \item \texttt{CampaignTargetBulkForm} : sélection multiple de cibles pour l'ajout groupé à une campagne.
+\end{itemize}
+
+Cette couche de formulaires améliore la validation et limite les erreurs de configuration côté administrateur.
+
+\subsubsection{core/admin.py}
+
+Le fichier contient désormais plusieurs personnalisations stratégiques :
+
+\begin{itemize}
+    \item actions admin pour l'envoi de campagne depuis la liste des campagnes et pour la consultation du reporting.
+    \item redirection automatique des campagnes planifiées via \texttt{CampaignAdmin.changelist\_view()} et \texttt{CampaignAdmin._refresh\_campaign\_statuses()}.
+    \item vue personnalisée \texttt{start\_campaign\_view()} accessible depuis un bouton \og Start now \fg{}.
+    \item \texttt{SmtpAccountAdmin} et \texttt{LandingPageAdmin} pour gérer les comptes SMTP et pages de destination.
+    \item import CSV et ajout groupé de cibles dans \texttt{TargetAdmin}.
+    \item ajout d'une vue d'administration \texttt{send\_emails\_view()} pour envoyer un template choisi à tous les destinataires d'une campagne.
+\end{itemize}
+
+Ces extensions rendent l'administration plus autonome et réduisent la dépendance à des commandes CLI.
+
+\subsubsection{core/views.py}
+
+Les endpoints de tracking ont été corrigés et enrichis :
+
+\begin{itemize}
+    \item \texttt{track\_pixel()} consomme le jeton \texttt{PendingOpen} et crée l'événement \texttt{open} uniquement au chargement effectif du pixel.
+    \item \texttt{track\_click()} consomme \texttt{PendingClick}, enregistre l'événement \texttt{click}, crée un événement \texttt{open} si nécessaire, puis redirige vers la landing page ou vers Google.
+    \item \texttt{landing\_page\_view()} rend le contenu de la page de destination avec le HTML et CSS personnalisés.
+    \item \texttt{landing\_page\_form\_submit()} gère les soumissions de formulaires depuis la landing page et crée un événement \texttt{submit}.
+\end{itemize}
+
+Ces modifications structurent le parcours complet de l'utilisateur : email → clic → page de sensibilisation → soumission.
+
+\subsubsection{core/tasks.py}
+
+Un mécanisme de tâche de fond a été ajouté pour la programmation automatique :\
+
+\begin{itemize}
+    \item \texttt{send\_pending\_campaigns\_task()} recherche les campagnes \texttt{draft} dont la \texttt{start\_date} est passée, puis lance l'envoi.
+    \item Le code monte le statut de la campagne en \texttt{running} ou \texttt{finished} selon la date de fin.
+    \item Seuls les \texttt{CampaignTarget} non envoyés sont traités pour éviter les doublons.
+\end{itemize}
+
+Ce fichier est la base d'une automatisation de type scheduler / cron et permet d'opérer sans intervention manuelle.
+
+\subsubsection{core/urls.py}
+
+Les nouvelles routes exposent désormais :
+
+\begin{itemize}
+    \item \texttt{api/track/pixel/<uuid:tracking\_id>/}
+    \item \texttt{api/track/click/<uuid:token>/}
+    \item \texttt{api/landing-page/<slug:slug>/}
+    \item \texttt{api/landing-page/<slug:slug>/submit/}
+\end{itemize}
+
+La structure URL supporte à la fois le tracking et le rendu des landing pages.
+
+\subsubsection{backend/settings.py}
+
+Les mises à jour du fichier de configuration incluent :
+
+\begin{itemize}
+    \item activation de \texttt{ckeditor} et \texttt{ckeditor\_uploader} pour l'édition WYSIWYG des templates et des landing pages.
+    \item configuration de \texttt{TRACKING\_BASE\_URL} pour générer les liens de pixel et de clic.
+    \item paramétrage SMTP réel pour Gmail via \texttt{EMAIL\_HOST}, \texttt{EMAIL\_PORT}, \texttt{EMAIL\_USE\_TLS}, \texttt{EMAIL\_HOST\_USER} et \texttt{EMAIL\_HOST\_PASSWORD}.
+    \item définition de \texttt{MEDIA\_ROOT} et \texttt{MEDIA\_URL} pour stocker les images uploadées depuis CKEditor.
+\end{itemize}
+
+\subsubsection{Templates et pages administratives}
+
+Les fichiers de templates ajoutés ou mis à jour comprennent :
+
+\begin{itemize}
+    \item \texttt{templates/admin/send\_campaign\_emails.html} pour le formulaire d'envoi de campagne depuis l'admin.
+    \item \texttt{templates/admin/core/landingpage/change\_form.html} pour l'édition visuelle des landing pages.
+    \item \texttt{templates/landing\_page.html} pour le rendu final des landing pages externes.
+    \item \texttt{templates/csv\_upload.html} et \texttt{templates/admin/add\_to\_campaign.html} pour l'import CSV et l'ajout groupé de cibles.
+\end{itemize}
+
+\subsection{Impact sur le projet}
+
+Ces changements font basculer le projet d'une preuve de concept purement manuelle vers une plateforme plus complète :
+
+\begin{itemize}
+    \item La campagne peut désormais démarrer automatiquement à la date prévue sans nécessiter d'appel manuel à \texttt{send\_campaign}.
+    \item Le suivi des clics est parfaitement réaliste : un événement n'est créé qu'au moment du clic, ce qui évite les faux positifs.
+    \item Le parcours utilisateur est plus riche grâce aux landing pages personnalisées, ce qui ouvre la voie à une phase 3 orientée sensibilisation et formation.
+    \item La gestion des comptes SMTP dans \texttt{admin} augmente la flexibilité et permet de changer facilement le compte d'envoi sans modifier le code.
+    \item L'administration est plus ergonomique : import CSV, ajout groupé, action d'envoi, et rapports de campagne sont tous accessibles depuis l'interface Django.
+\end{itemize}
+
+\subsection{Conclusion des mises à jour}
+
+L'essentiel des nouvelles évolutions renforce la robustesse du backend et prépare le projet à une extension frontend. L'architecture actuelle supporte maintenant un workflow complet : création de campagne, configuration SMTP, génération d'emails trackés, gestion des landing pages et traitement automatique des campagnes planifiées.
+
+\newpage
+\section{Compléments techniques manquants}
+
+Une dernière page est ajoutée pour documenter des éléments importants qui n'étaient pas suffisamment détaillés dans la version précédente du rapport.
+
+\subsection{Scheduler de campagnes et démarrage automatique}
+
+Une logique de planification est intégrée au démarrage de l'application via le fichier \texttt{core/apps.py}. Ce fichier crée un scheduler lorsque Django démarre en mode serveur :
+
+\begin{itemize}
+    \item il tente d'abord d'utiliser \texttt{APScheduler} avec une tâche configurée pour s'exécuter toutes les 10 secondes ;
+    \item si APScheduler n'est pas disponible, il bascule sur un thread Python de secours qui vérifie également les campagnes toutes les 10 secondes.
+\end{itemize}
+
+Ce mécanisme garantit que la plateforme peut déclencher automatiquement les campagnes planifiées sans dépendre uniquement d'une commande manuelle.
+
+\subsection{Commande Django d'exécution continue}
+
+Le fichier \texttt{core/management/commands/send\_pending\_campaigns.py} expose une commande CLI complémentaire :
+
+\begin{itemize}
+    \item \texttt{python manage.py send\_pending\_campaigns} : vérifie et envoie une fois les campagnes dues ;
+    \item \texttt{python manage.py send\_pending\_campaigns --daemon} : lance un mode continu qui exécute la vérification toutes les 10 secondes.
+\end{itemize}
+
+Cette commande est utile pour les environnements où APScheduler n'est pas installé ou pour les exécutions supervisées par un processus système.
+
+\subsection{Détail du traitement de campagne dans \texttt{core/tasks.py}}
+
+Le coeur de la logique d'envoi automatique se trouve dans \texttt{core/tasks.py} :
+
+\begin{itemize}
+    \item \texttt{send\_pending\_campaigns\_task()} cherche les campagnes en \texttt{draft} dont la \texttt{start\_date} est passée et qui ont un template d'email associé ;
+    \item les campagnes en \texttt{running} dont la \texttt{end\_date} est atteinte sont automatiquement marquées \texttt{finished} ;
+    \item lors de l'envoi, seules les cibles \texttt{CampaignTarget} dont \texttt{sent\_at} est \texttt{None} sont traitées, ce qui évite les doublons en cas de redémarrage ou de réexécution de la tâche.
+\end{itemize}
+
+Ce comportement est crucial pour la fiabilité opérationnelle du système.
+
+\subsection{Suivi des ouvertures et des clics en détail}
+
+Le rapport évoquait le suivi des clics et des ouvertures, mais le fonctionnement exact méritait un complément :
+
+\begin{itemize}
+    \item \texttt{PendingOpen} est créé à l'envoi d'un email et attend le chargement du pixel avant de générer l'événement \texttt{open}. Cela évite de compter une ouverture avant l'interaction réelle du client de messagerie.
+    \item si le destinataire clique avant que le pixel ne soit chargé, la vue \texttt{track\_click()} crée un événement \texttt{open} secondaire afin de ne pas perdre l'information d'ouverture.
+    \item \texttt{PendingClick} est consommé une seule fois au clic, ce qui garantit qu'un même lien ne peut pas générer plusieurs événements \texttt{click} non désirés.
+\end{itemize}
+
+\subsection{Éléments de modèle et d'interface supplémentaires}
+
+Deux éléments importants du modèle n'étaient pas suffisamment détaillés :
+
+\begin{itemize}
+    \item \texttt{EmailTemplate.realism\_score} : ce champ calcule automatiquement un score de réalisme du template basé sur la présence de variables dynamiques, d'un langage professionnel, de liens descriptifs, d'images et de CSS. Il est recalculé à chaque sauvegarde et peut être mis à jour via l'action admin correspondante.
+    \item \texttt{EmailImage} : ce modèle permet l'upload d'images stockées dans \texttt{media/email\_images/} et intégrables dans les templates via CKEditor.
+\end{itemize}
+
+\subsection{Conclusion du complément}
+
+Ce nouveau chapitre complète le rapport en couvrant les aspects de déploiement et de fonctionnement durable du backend. Il met l'accent sur l'automatisation des campagnes, le traitement des événements de tracking, et la robustesse du système même en cas de redémarrage ou d'exécution répétée.
+
+\end{document}

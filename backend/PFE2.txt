@@ -1,0 +1,391 @@
+Project summary
+
+This is a Django project for a phishing simulation platform. It is built as a backend application with a strong administration interface. The main idea is to manage
+campaigns, targets, email templates, and tracking events using Django models and the Django admin.
+
+How I started the project
+
+I started the project with Django commands. The core commands were:
+
+- django-admin startproject backend .
+- python manage.py startapp core
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py runserver
+
+The first command created the Django project in the backend folder and the second command created the core application. After writing the models and settings, I used makemigrations and
+migrate to create the database schema. Then I ran the server locally with runserver.
+
+Database used
+
+The database is SQLite, which is the default database for Django development. It is stored in db.sqlite3 at the root of the project. I did not need a separate database engine like PostgreSQL for this
+prototype. SQLite is good for development because it is simple, file-based, and works immediately without extra installation.
+
+How the database is built
+
+The database schema is defined by Django models in core/models.py. Each model becomes a table in SQLite. The important models are:
+
+- Campaign: stores the campaign name, description, selected email template, start date, end date, status, and timestamps.
+- EmailTemplate: stores the template name, subject, HTML content, plain text fallback, and optional variables.
+- Target: stores each recipient email and personal data such as first name, last name, department, and groups.
+- CampaignTarget: stores the relationship between a campaign and each target, plus the time the message was sent.
+- TrackingEvent: stores open and click events with UUIDs, IP addresses, user agents, and timestamps.
+- PendingClick: stores a temporary click token for each sent email before the actual click event happens.
+- EmailImage: stores uploaded images for email templates.
+
+The migrations system generated the actual SQLite tables from these models.
+
+Folder structure and responsibilities
+
+Root folder:
+- manage.py: this is the Django command runner. It is used for migrations, running the server, creating apps, and custom commands.
+- db.sqlite3: the local SQLite database file.
+
+backend/: the Django project settings folder.
+- backend/settings.py: contains all project settings, including installed apps, database configuration, email settings, static files, media files, and CKEditor settings.
+- backend/urls.py: routes the main URL patterns. It includes admin/ for the Django admin interface and api/ for the core tracking endpoints.
+- backend/asgi.py and backend/wsgi.py: deployment entry points.
+
+core/: the main application.
+- core/models.py: defines the data structure and database tables.
+- core/admin.py: defines how the models appear in the Django admin and custom admin behavior.
+- core/forms.py: defines custom forms used by the campaign admin and the bulk add features.
+- core/views.py: defines the tracking endpoints for open and click events.
+- core/urls.py: maps the tracking URLs to the views.
+- core/utils.py: contains helper functions for generating tracking links and sending phishing emails.
+- core/management/commands/send_campaign.py: a custom Django command to send campaign emails from the terminal.
+- core/templates/: contains custom admin templates that override default admin pages.
+
+templates/: not in core but under core/templates/admin. It contains custom admin templates for campaign and target pages.
+
+media/: stores uploaded files, such as images used in email templates.
+
+How the pages work
+
+Campaign creation page
+
+The campaign creation page is a custom admin form. It is built with core/forms.py where CampaignForm defines the fields:
+- name
+- description
+- email_template
+- start_date
+- end_date
+- status
+- targets
+
+The targets field is a multi-select field that lets the administrator choose several recipients. The field labels each target with email, name, department, and groups.
+
+The campaign form is rendered with a custom template: core/templates/admin/core/campaign/change_form.html. That template adds a filter panel above the target list. The filter panel includes:
+- group filter text input
+- department filter text input
+- Filter button
+- Reset button
+- Select all visible button
+- Clear all button
+
+This allows the administrator to search targets by group or department and then select the visible options.
+
+When the campaign form is saved, core/admin.py CampaignAdmin.save_model() performs extra work:
+- it saves the campaign object normally.
+- it reads the selected targets from form.cleaned_data['targets'].
+- it compares the selected targets to the existing CampaignTarget associations.
+- it creates new CampaignTarget rows for newly selected targets.
+- it deletes CampaignTarget rows for deselected targets.
+
+This means the campaign page controls both the campaign details and the target membership.
+
+Campaign start logic
+
+CampaignAdmin.save_model() also contains logic to start the campaign automatically if the campaign has an email template and the start_date is in the past or now. In that case, it calls _send_campaign_now().
+
+_send_campaign_now() does the following:
+- checks that an email template exists.
+- checks that the campaign has targets.
+- updates the campaign status to running or finished depending on the end_date.
+- loops through each CampaignTarget and sends a phishing email with core/utils.py send_phishing_email().
+- updates the campaign target sent_at timestamp.
+- records successes and failures in admin messages.
+
+This is the launch mechanism. It is triggered in two places:
+1. when the campaign is saved and the start date is already reached.
+2. when the campaign list page refreshes and finds scheduled campaigns that are due.
+
+Campaign list page
+
+The campaign list page is also customized. It uses core/templates/admin/core/campaign/change_list.html. That template adds JavaScript and CSS for live timers.
+
+Two live columns are displayed:
+- Starts In: shows the countdown until the campaign starts.
+- Running Time: shows how long the campaign has been running.
+
+The JavaScript on the change list page does these tasks:
+- updates countdown timers every second.
+- formats durations as days, hours, minutes, seconds.
+- when a countdown reaches zero, it calls the admin URL start-now/<campaign_id>.
+- when a campaign is already running, it updates the runtime timer every second.
+
+On the server side, CampaignAdmin.changelist_view() calls _refresh_campaign_statuses() before rendering the page. That method checks:
+- draft campaigns whose start_date has passed and which have an email template.
+- running campaigns whose end_date has passed.
+
+It starts due campaigns automatically and marks finished campaigns as finished.
+
+This means the campaign list page is not only a display; it also acts as a scheduler and a launch monitor.
+
+Target creation and management
+
+Target management is handled through the TargetAdmin class in core/admin.py. It provides both manual creation and CSV import.
+
+CSV import
+
+TargetAdmin defines a custom URL import-csv/ and a view import_csv_view(). The administrator can upload a CSV file with columns:
+- email
+- first_name
+- last_name
+- department
+- groups
+
+The view reads the CSV file, decodes it as UTF-8, and uses csv.DictReader. For each row:
+- it reads the email
+- it updates or creates the Target object by email
+- it writes first name, last name, department, groups to the target record
+
+After import, the system reports how many targets were created and how many were updated.
+
+Bulk add to campaign
+
+TargetAdmin also defines an action called add_to_campaign. When targets are selected, the administrator picks a campaign and the code adds each selected target to that campaign by creating CampaignTarget rows.
+
+This means the target page supports both importing target data and assigning targets to campaigns in bulk.
+
+Email template management
+
+EmailTemplate is a model used to store phishing email templates. It has fields:
+- name
+- subject
+- html_content
+- plain_text_content
+- variables
+
+The html_content field is a RichTextUploadingField from django-ckeditor. This means the admin uses a WYSIWYG editor for email templates. The editor allows rich formatting, image uploading, and a more friendly interface than plain HTML.
+
+In the admin, EmailTemplateAdmin is registered so that templates can be created and edited.
+
+Tracking and click logic
+
+The project tracks two main events: email opens and link clicks.
+
+Open tracking
+
+When the email is sent, core/utils.py generate_tracking_links() creates a TrackingEvent with event_type open. It also builds a pixel URL using the UUID of that TrackingEvent.
+
+The pixel URL is:
+/api/track/pixel/<tracking_id>/
+
+When the recipient's email client loads that image, core/views.py track_pixel() is called. It updates the existing TrackingEvent with the visitor IP and user agent, then returns a transparent 1x1 GIF.
+
+Click tracking
+
+For clicks, generate_tracking_links() creates a PendingClick token. It does not create a click event yet. The click URL is:
+/api/track/click/<token>/
+
+When the recipient clicks the link, core/views.py track_click() does the following:
+- finds the PendingClick row by token
+- creates a new TrackingEvent with event_type click
+- records IP and user agent
+- deletes the PendingClick row, so the click is one-time only
+- redirects the user to a placeholder page (currently Google)
+
+This design means that the system only records actual clicks, and every click token is consumed once.
+
+Sending phishing emails
+
+The main email sending logic is in core/utils.py send_phishing_email(). It:
+- generates unique tracking links for each target
+- prepares a context with first_name, last_name, email, tracking_pixel, and tracking_link
+- renders the HTML template with Django Template and Context
+- renders plain text fallback if present
+- sends the email using Django send_mail with html_message
+
+This function is used by both the admin launch flows and the custom management command.
+
+Command-line campaign launch
+
+There is also a management command in core/management/commands/send_campaign.py. It takes a campaign_id argument, loads the campaign, and sends phishing emails to each target associated with that campaign.
+
+The command does this:
+- gets campaign.campaigntarget_set.select_related('target')
+- selects campaign.email_template or falls back to the first available template
+- loops through each campaign target and calls send_phishing_email()
+- updates the sent_at timestamp on each CampaignTarget
+
+This command is useful for launching campaigns from the terminal instead of from the admin.
+
+How files relate to each other
+
+The main relationships between files are:
+
+- core/models.py defines the data and relationships. Everything else depends on these models.
+- core/admin.py registers the models in the Django admin and customizes the pages.
+- core/forms.py defines the forms used by admin pages, especially the campaign form and bulk forms.
+- core/templates/admin/core/campaign/change_form.html customizes the campaign edit page.
+- core/templates/admin/core/campaign/change_list.html customizes the campaign list page.
+- core/views.py implements the public tracking endpoints.
+- core/urls.py maps the tracking endpoints to URLs.
+- core/utils.py contains the email tracking and sending logic.
+- core/management/commands/send_campaign.py runs campaign sending from the command line.
+
+In short, the models define what data exists, the admin and forms define how data is edited, the templates define how the admin pages look, the views define how tracking requests are received, and utils/commands define how email sending works.
+
+What I will say in person
+
+If I speak for 30 minutes, I will structure my talk like this:
+
+1. Start with the goal of the project.
+   - Explain that this is a phishing simulation platform built with Django.
+   - Mention that the admin interface is the main user interface for now.
+
+2. Explain how the project was created.
+   - Show the commands: django-admin startproject, startapp, makemigrations, migrate, runserver.
+   - Explain that settings.py configures the database, installed apps, email, and CKEditor.
+
+3. Describe the database.
+   - Say that SQLite is used and stored in db.sqlite3.
+   - Explain that models in core/models.py generate the database schema.
+   - Describe the core tables: Campaign, EmailTemplate, Target, CampaignTarget, TrackingEvent, PendingClick, EmailImage.
+
+4. Explain the folder structure.
+   - Root: manage.py and db.sqlite3.
+   - backend/: project configuration and URL routing.
+   - core/: business logic and admin customization.
+   - templates/: admin templates override.
+   - media/: uploaded files.
+
+5. Walk through target creation.
+   - Manual creation in admin.
+   - CSV import with TargetAdmin and import_csv_view.
+   - Explain the CSV format and how update_or_create works.
+   - Show bulk add to campaign action.
+
+6. Walk through campaign creation.
+   - Explain CampaignForm in core/forms.py.
+   - Show how the campaign page includes email template selection and target selection.
+   - Explain the filter controls in change_form.html.
+   - Explain save_model() syncs campaign targets and supports auto-start.
+
+7. Explain campaign launch.
+   - Show how the campaign list page has live timers and auto-start logic.
+   - Explain _send_campaign_now() and _refresh_campaign_statuses().
+   - Mention the start-now/<campaign_id>/ endpoint for automatic start.
+   - Mention the management command send_campaign if launched from the terminal.
+
+8. Explain email templates and CKEditor.
+   - Describe how html_content uses RichTextUploadingField.
+   - Explain that the admin uses CKEditor for WYSIWYG editing.
+   - Mention that email templates can include variables like first_name, last_name, tracking_pixel, tracking_link.
+
+9. Explain tracking.
+   - Show open tracking: pixel URL and TrackingEvent update.
+   - Show click tracking: PendingClick token and actual click event creation.
+   - Mention that open events are pre-created and click events are created only on real clicks.
+
+10. Describe the file relationships.
+   - Models are the heart of the app.
+   - Admin forms and templates are the user interface.
+   - Views and urls handle tracking requests.
+   - Utils and commands handle email sending.
+
+11. Summarize the flow.
+   - An administrator imports targets, creates a campaign, selects an email template and targets, and saves.
+   - The campaign page records the schedule and target membership.
+   - When the start date arrives, the campaign is launched automatically from the list page or on save.
+   - Phishing emails are generated with tracking links and sent to each target.
+   - Opens and clicks are recorded in the database.
+
+12. Finish with next steps.
+   - Mention that this backend is ready for a frontend React UI.
+   - Mention that the tracking system and email sending are already functional.
+   - Mention that the platform can be extended with landing pages and PDF reports.
+
+Detailed page and file relationships by folder
+
+backend/:
+- settings.py: configures the database, email sender, installed apps, media, and CKEditor.
+- urls.py: includes admin/ and api/ routes.
+
+core/models.py:
+- defines all tables and relationships.
+- campaign links to email template.
+- campaign-target links campaigns to recipients.
+- tracking events record open and click behavior.
+- pending clicks store click tokens before a real click.
+
+core/admin.py:
+- registers each model for the admin.
+- customizes the campaign page and target page.
+- adds CSV import and bulk add actions.
+- adds custom campaign templates and scheduler behavior.
+
+core/forms.py:
+- CampaignForm: custom campaign form with email_template and targets.
+- TargetChoiceField: custom label for each target option.
+
+core/views.py:
+- track_pixel: updates open events and returns a transparent GIF.
+- track_click: consumes a pending click token and creates a click event.
+
+core/urls.py:
+- maps /api/track/pixel/<uuid>/ and /api/track/click/<uuid>/ to the tracking views.
+
+core/utils.py:
+- generate_tracking_links: creates open event and pending click token.
+- send_phishing_email: renders the template and sends the email.
+
+core/management/commands/send_campaign.py:
+- sends the campaign from the terminal using the same send_phishing_email function.
+
+core/templates/admin/core/campaign/change_form.html:
+- adds filter inputs and buttons for target selection.
+- improves the campaign create/edit experience.
+
+core/templates/admin/core/campaign/change_list.html:
+- adds live timer columns and automatic launch behavior.
+
+What each page uses to function
+
+Campaign create page:
+- uses CampaignForm fields from core/forms.py.
+- uses the campaign model from core/models.py.
+- uses the change_form template from core/templates/admin/core/campaign/change_form.html.
+- saves target choices through CampaignAdmin.save_model().
+
+Campaign list page:
+- uses CampaignAdmin list_display fields and custom HTML.
+- uses JavaScript in core/templates/admin/core/campaign/change_list.html.
+- calls start_campaign_view() through the start-now URL.
+- auto-launches campaigns through CampaignAdmin._refresh_campaign_statuses().
+
+Target page:
+- uses TargetAdmin from core/admin.py.
+- allows CSV import through TargetAdmin.import_csv_view().
+- adds selected targets to a campaign with TargetAdmin.add_to_campaign().
+
+Email template page:
+- uses EmailTemplate model and EmailTemplateAdmin.
+- uses CKEditor for html_content input.
+- stores WYSIWYG HTML for phishing emails.
+
+Tracking page / API:
+- serves pixel and click URLs from core/views.py.
+- records events in TrackingEvent.
+- uses PendingClick to create reliable click events.
+
+Command line send page:
+- uses the management command send_campaign.py.
+- sends all emails for a campaign to its associated targets.
+
+How the project is ready for presentation
+
+I can explain the design clearly because the project is divided into logical parts: database, admin interface, email sending, and tracking. I can show the actual files that implement each part and then explain the runtime flow from target import to campaign launch.
+
+This text is long enough to support a 30-minute talk if I go through each section slowly, show the code, and explain how each page and file cooperate.
